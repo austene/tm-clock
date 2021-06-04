@@ -4,7 +4,7 @@ function Timer({ remainingDuration}) {
   return (
     <div>
       <strong>Timer here</strong>
-      <p>Time Remaing: {remainingDuration}</p>
+      <p>Time Remaining: {remainingDuration}</p>
     </div>
   );
 }
