@@ -6,7 +6,22 @@ import Clock from './Clock.js';
 import { v4 as uuidv4 } from 'uuid';
 
 //Array of clocks
-const clockArray = ['Apple', 'Banana'];
+const clockArray = [
+  {
+    clockName: 'Apple',
+    clockId: uuidv4(),
+    isClockTurn: true,
+    remainingDuration: 10,
+    remainingGraceDuration:5,
+  },
+  {
+    clockName: 'Banana',
+    clockId: uuidv4(),
+    isClockTurn: false,
+    remainingDuration: 9,
+    remainingGraceDuration: 4
+  }
+];
 
 function App() {
   //React states for App
@@ -30,7 +45,8 @@ function App() {
     <React.Fragment>
       {clockArray.map(clock => (
         <Clock
-          key={uuidv4()}
+          key={clock.clockId}
+          clockData={clock}
           isGameActive={isGameActive}
           onNextClick={handleNextClick}
           onTurnInClick={handleTurnInClick}

@@ -1,10 +1,15 @@
 
 
-function Timer({ remainingDuration}) {  
+function Timer({ remainingDuration, remainingGraceDuration }) {  
   return (
     <div>
-      <strong>Timer here</strong>
-      <p>Time Remaining: {remainingDuration}</p>
+      <p>Timer
+        <br />
+        {/* <span>{remainingDuration > 0 ? '-Time Remaining': 'Grace Remaining'}</span> */}
+        <span>-Time Remaining: {remainingDuration}</span>
+        <br />
+        <span>-Grace Remaining: {remainingGraceDuration}</span>
+      </p>
     </div>
   );
 }
