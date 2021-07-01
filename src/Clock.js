@@ -5,14 +5,14 @@ import useInterval from './CustomHooks.js';
 
 
 function Clock({ clockData, isGameActive, onNextClick, onTurnInClick }) {  
-  const {clockName, isClockTurn, remainingGraceDuration} = clockData;
+  const {clockId, clockName, isClockTurn } = clockData;
 
   // const [localRemainingDuration, setLocalRemainingDuration] = React.useState(remainingDuration)
-  const [localRemainingGraceDuration, setLocalRemainingGraceDuration] = React.useState(remainingGraceDuration);
+  // const [localRemainingGraceDuration, setLocalRemainingGraceDuration] = React.useState(remainingGraceDuration);
   const [isOutOfTime, setIsOutOfTime] = React.useState(false);
-  const [remainingDuration, setRemainingDuration] = React.useState(10);
+  const [remainingDuration, setRemainingDuration] = React.useState(5);
+  const [remainingGraceDuration, setRemainingGraceDuration] = React.useState(3);
   // const [isCountingDown, setIsCountingDown] = React.useState(false);
-  // const [remainingGraceDuration, setRemainingGraceDuration] = React.useState(5);
 
   // const countDownCallback = () => {
   //   if (localRemainingDuration > 0) {
@@ -25,9 +25,14 @@ function Clock({ clockData, isGameActive, onNextClick, onTurnInClick }) {
   const countDownCallback = () => {
     if (remainingDuration > 0) {
       setRemainingDuration(remainingDuration - 1);
+      console.log(`isClockTurn ${isClockTurn} for clock ${clockName}`)
+    } else if (remainingDuration === 0 && remainingGraceDuration > 0) {
+      setRemainingGraceDuration(remainingGraceDuration -1);
     } else {
       setIsOutOfTime(true)
       console.log(`isOutOfTime is ${isOutOfTime}`)
+      //freeze out clock
+      //text 'clock is out of gametime & gracetime'
     };
   };
 
@@ -42,13 +47,14 @@ function Clock({ clockData, isGameActive, onNextClick, onTurnInClick }) {
       />
       <button
         type='button'
-        onClick={() => onNextClick()}
+        onClick={() => onNextClick(clockId)}
       >
         Next
       </button>
       <button
         type='button'
-        onClick={() => onTurnInClick()}
+        // onClick={() => onTurnInClick()}
+        onClick={() => console.log('here')}
       >
         Turn In
       </button>

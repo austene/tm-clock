@@ -23,14 +23,52 @@ const clockArray = [
   }
 ];
 
+//Clock Reducer
+const clocksReducer = (state, action) => {
+  //reducer functions
+  function getIndex(clockId) {
+    return state.findIndex(clock => clock.clockId === action.payload.clockId)
+  };
+  let currentClockIndex = getIndex(action.payload.clockId)
+  let nextClockIndex = currentClockIndex + 1 < state.length ? currentClockIndex + 1 : 0;
+
+  //Switch Cases
+  switch (action.type) {
+    case 'SWITCH_CLOCK':
+      console.log(`SWITCH_CLOCK & clockId is ${action.payload}`)
+      clockArray[currentClockIndex] = {
+        ...clockArray[currentClockIndex],
+        clockTurn: false,
+      };
+      clockArray[nextClockIndex] = {
+        ...clockArray[nextClockIndex],
+        clockTurn: true,
+      };
+      return {
+        ...state,
+        //do something here to update state
+        state: clockArray,
+      };
+      default:
+        throw new Error();
+  }
+};
+
 function App() {
   //React states for App
   const [isGameActive, setIsGameActive] = React.useState(false); 
+
+  //clocksReducer state aka 'clocks'
+  const [clocks, dispatchClocks] = React.useReducer(clocksReducer, clockArray)
   
   //Callback Functions
-  const handleNextClick = () => {
+  const handleNextClick = React.useCallback(clockId => {
     console.log('next button clicked, callback to app')
-  };
+    dispatchClocks({
+      type: 'SWITCH_CLOCK',
+      payload: clockId,
+    });
+  }, []);
 
   const handleTurnInClick = () => {
     console.log('TurnIn clicked, callback to app')
