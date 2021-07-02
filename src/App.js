@@ -31,24 +31,32 @@ const clockReducer = (state, action) => {
   //Switch Cases
   switch (action.type) {
     case 'SWITCH_CLOCK':
-      //**must still update this with curr and next & make the end state copy look correct */
-      //copy original state
-      let updatedState = [...state]
-      //find object to modify
-      let selectedClock = updatedState.findIndex((clock) => {
-        return clock.clockId === action.payload
-      });
-      //modify object
-      updatedState[selectedClock].isClockTurn = false;
-      //update state
-      // return {
-      //   ...state,
-      //   state: updatedState
-      // }
+      // //**must still update this with curr and next & make the end state copy look correct */
+      // //copy original state
+      // let updatedState = [...state]
+      // //find object to modify
+      // let selectedClock = updatedState.findIndex((clock) => {
+      //   return clock.clockId === action.payload
+      // });
+      // //modify object
+      // updatedState[selectedClock].isClockTurn = false;
+      // //update state
+      // // return {
+      // //   ...state,
+      // //   state: updatedState
+      // // }
 
       //find Clock Index logic
       function getIndex(payloadClockId) {
-        return state.findIndex(clock => clock.clockId === payloadClockId)
+        console.log(`state[0] is ${state[0].clockName}`)
+        console.log(`state[1] is ${state[1].clockName}`)
+        // return state.findIndex(clock => clock.clockId === payloadClockId)
+        for (let i=0; i < state.length; i++) {
+          if (state[i].clockId === payloadClockId) {
+            return i;
+          }
+        } 
+        return -1;
       };
       let currentClockIndex = getIndex(action.payload)
       let nextClockIndex = currentClockIndex + 1 < state.length ? currentClockIndex + 1 : 0;
@@ -63,7 +71,6 @@ const clockReducer = (state, action) => {
       };
       return {
         ...state,
-        state: state,
       };
       default:
         throw new Error();
@@ -75,7 +82,7 @@ function App() {
   const [isGameActive, setIsGameActive] = React.useState(false); 
 
   //clocksReducer state aka 'clocks'
-  const [clockState, dispatchClocks] = React.useReducer(clockReducer, clockArray)
+  const [state, dispatchClocks] = React.useReducer(clockReducer, clockArray)
   
   //Callback Functions
   const handleNextClick = React.useCallback(clockId => {
