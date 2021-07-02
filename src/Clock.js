@@ -25,7 +25,6 @@ function Clock({ clockData, isGameActive, onNextClick, onTurnInClick }) {
   const countDownCallback = () => {
     if (remainingDuration > 0) {
       setRemainingDuration(remainingDuration - 1);
-      console.log(`isClockTurn ${isClockTurn} for clock ${clockName}`)
     } else if (remainingDuration === 0 && remainingGraceDuration > 0) {
       setRemainingGraceDuration(remainingGraceDuration -1);
     } else {
@@ -54,7 +53,7 @@ function Clock({ clockData, isGameActive, onNextClick, onTurnInClick }) {
       <button
         type='button'
         // onClick={() => onTurnInClick()}
-        onClick={() => console.log('here')}
+        onClick={() => console.log('Turn In clicked')}
       >
         Turn In
       </button>
